@@ -9,7 +9,7 @@ namespace Lecture0
             string welcomeString = "Hello World!";
             Console.WriteLine(welcomeString);
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
