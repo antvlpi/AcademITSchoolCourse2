@@ -17,6 +17,8 @@ namespace RangeTask
             {
                 Console.WriteLine("Число не лежит в диапазоне введенных чисел.");
             }
+
+            Range range2 = new Range(GetStartNumber(), GetFinalNimber());
         }
 
         public static double GetStartNumber()
