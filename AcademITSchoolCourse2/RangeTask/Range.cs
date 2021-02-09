@@ -5,6 +5,7 @@ namespace RangeTask
     class Range
     {
         public double From { get; set; }
+
         public double To { get; set; }
 
         public Range(double from, double to)
@@ -23,89 +24,71 @@ namespace RangeTask
             return From <= number && number <= To;
         }
 
-        public Range GetIntervalsIntersection(Range range1, Range range2)
+        public Range GetIntersection(Range range2)
         {
-            if (range1.To <= range2.From || range1.From >= range2.To)
+            if (From <= range2.From && To >= range2.To || From >= range2.From && To <= range2.To)
             {
-                return null;
+                return new Range(Math.Max(From, range2.From), Math.Min(To, range2.To));
             }
 
-            if (range1.From < range2.From)
-            {
-                this.From = range2.From;
-            }
-            else
-            {
-                this.From = range1.From;
-            }
-
-            if (range1.To < range2.To)
-            {
-                this.To = range1.To;
-            }
-            else
-            {
-                this.To = range2.To;
-            }
-
-            return new Range(this.From, this.To);
+            return null;
         }
 
-        public Range[] GetIntervalsCombining(Range range1, Range range2)
+        public Range[] GetUnion(Range range2)
         {
-            Range[] rangeArray = new Range[1];
-            rangeArray[0] = new Range(range1.From, range1.To);
-            rangeArray[0].From = range1.From;
-            rangeArray[0].To = range1.To;
-
-            if (range1.To < range2.From || range1.From > range2.To)
+            if (To < range2.From || From > range2.To)
             {
-                rangeArray = new Range[2];
-                rangeArray[1] = new Range(range2.From, range2.To);
-                rangeArray[1].From = range2.From;
-                rangeArray[1].To = range2.To;
-
-                return rangeArray;
+                return new Range[] { new Range(From, To), new Range(range2.From, range2.To) };
             }
 
-            if (range1.From >= range2.From)
-            {
-                rangeArray[0].From = range2.From;
-            }
-
-            if (range1.To <= range2.To)
-            {
-                rangeArray[0].To = range2.To;
-            }
-
-            return rangeArray;
+            return new Range[] { new Range(Math.Min(From, range2.From), Math.Max(To, range2.To)) };
         }
 
-        public Range[] GetAsymmetricalIntervalsDifference(Range range1, Range range2)
+        public Range[] GetAsymmetricalDifference(Range range2)
         {
-            Range[] rangeArray = new Range[1];
-            rangeArray[0] = new Range(range1.From, range1.To);
-            rangeArray[0].From = range1.From;
-            rangeArray[0].To = range1.To;
-
-            if (range1.To <= range2.From || range1.From >= range2.To)
+            if (From >= range2.From && To <= range2.To || From < range2.From && To < range2.To || From > range2.From && To > range2.To)
             {
-                rangeArray = new Range[2];
-                rangeArray[1] = new Range(range2.From, range2.To);
-                rangeArray[1].From = range2.From;
-                rangeArray[1].To = range2.To;
-
-                return rangeArray;
+                return new Range[0];
             }
 
-            if (range1.From == range2.From && range1.To == range2.To)
+            if (To < range2.From || From > range2.To)
             {
-                return null;
+                return new Range[] { new Range(From, To) };
             }
 
-            rangeArray[0].To = range2.From;
+            if (From < range2.From && To > range2.To)
+            {
+                return new Range[] { new Range(From, range2.From), new Range(range2.To, To) };
+            }
 
-            return rangeArray;
+            return new Range[] { new Range(From, range2.From) };
+        }
+
+        public string ToString()
+        {
+            return $"Интервал-пересечение выполнено: [({From};{To})]";
+        }
+
+        public static void ToString(string operationType, Range[] ranges)
+        {
+            if (ranges.Length == 2)
+            {
+                Console.WriteLine(operationType + "интервалов имеет два куска: [({0};{1}),({2};{3})]", ranges[0].From, ranges[0].To, ranges[1].From, ranges[1].To);
+
+                return;
+            }
+
+            if (ranges.Length == 1)
+            {
+                Console.WriteLine(operationType + "интервалов выполнено: [({0};{1})]", ranges[0].From, ranges[0].To);
+
+                return;
+            }
+
+            if (ranges.Length == 0)
+            {
+                Console.WriteLine(operationType + "интервалов выполнено: []");
+            }
         }
     }
 }

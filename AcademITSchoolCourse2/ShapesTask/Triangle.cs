@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShapesTask
 {
     class Triangle : IShape
     {
         public double X1 { get; set; }
+
         public double X2 { get; set; }
+
         public double X3 { get; set; }
+
         public double Y1 { get; set; }
+
         public double Y2 { get; set; }
+
         public double Y3 { get; set; }
 
         public Triangle(double x1, double x2, double x3, double y1, double y2, double y3)

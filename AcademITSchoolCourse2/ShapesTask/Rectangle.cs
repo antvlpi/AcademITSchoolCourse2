@@ -5,6 +5,7 @@ namespace ShapesTask
     class Rectangle : IShape
     {
         public double Side1 { get; set; }
+
         public double Side2 { get; set; }
 
         public Rectangle(double side1, double side2)
