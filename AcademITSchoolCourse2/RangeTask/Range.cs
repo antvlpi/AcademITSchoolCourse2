@@ -88,6 +88,8 @@ namespace RangeTask
             if (ranges.Length == 0)
             {
                 Console.WriteLine(operationType + "интервалов выполнено: []");
+
+                return;
             }
         }
     }
