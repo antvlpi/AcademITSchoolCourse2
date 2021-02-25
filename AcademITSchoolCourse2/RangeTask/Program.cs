@@ -6,17 +6,17 @@ namespace RangeTask
     {
         static void Main(string[] args)
         {
-            const string firstNumberEntering = "Введите первое число диапазона:";
-            const string secondNumberEntering = "Введите второе число диапазона:";
+            const string numberEntering1 = "Введите первое число диапазона:";
+            const string numberEntering2 = "Введите второе число диапазона:";
 
-            Range range1 = new Range(GetNumber(firstNumberEntering), GetNumber(secondNumberEntering));
+            Range range1 = new Range(GetNumber(numberEntering1), GetNumber(numberEntering2));
 
             // Длина диапазона и проверка числа в диапазоне
             Console.WriteLine("Длина диапазона: = " + range1.GetLength());
 
-            const string checkNumberEntering = "Введите число, которое нужно проверить находится ли оно в диапазоне:";
+            Console.WriteLine("Введите число, которое нужно проверить находится ли оно в диапазоне:");
 
-            if (range1.IsInside(GetNumber(checkNumberEntering)))
+            if (range1.IsInside(Convert.ToDouble(Console.ReadLine())))
             {
                 Console.WriteLine("Введенное число принадлежит данному диапазону.");
             }
@@ -27,7 +27,7 @@ namespace RangeTask
 
             Console.WriteLine();
             Console.WriteLine("Задайте второй диапазон.");
-            Range range2 = new Range(GetNumber(firstNumberEntering), GetNumber(secondNumberEntering));
+            Range range2 = new Range(GetNumber(numberEntering1), GetNumber(numberEntering2));
 
             // Часть2 задания
             // Интервал-пересечение
@@ -40,20 +40,20 @@ namespace RangeTask
             }
             else
             {
-                Console.WriteLine(rangeIntersection.ToString());
+                Console.WriteLine(rangeIntersection);
             }
 
             // Интервал-объединение
             Console.WriteLine();
             Range[] rangesUnion = new Range(range1.From, range1.To).GetUnion(range2);
 
-            Range.ToString("Объединение ", rangesUnion);
+            Console.WriteLine(Range.ToString("Объединение ", rangesUnion));
 
             //Разность интервалов
             Console.WriteLine();
-            Range[] rangesAsymmetricalDifference = new Range(range1.From, range1.To).GetAsymmetricalDifference(range2);
+            Range[] rangesAsymmetricalDifference = new Range(range1.From, range1.To).GetDifference(range2);
 
-            Range.ToString("Разность ", rangesAsymmetricalDifference);
+            Console.WriteLine(Range.ToString("Разность ", rangesAsymmetricalDifference));
 
             Console.ReadKey();
         }

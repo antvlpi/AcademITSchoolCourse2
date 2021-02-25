@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ShapesTask
 {
@@ -11,5 +13,7 @@ namespace ShapesTask
         double GetArea();
 
         double GetPerimeter();
+
+        string GetShapeName();
     }
 }

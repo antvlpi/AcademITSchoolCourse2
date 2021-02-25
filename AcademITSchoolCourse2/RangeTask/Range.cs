@@ -26,7 +26,7 @@ namespace RangeTask
 
         public Range GetIntersection(Range range2)
         {
-            if (From <= range2.From && To >= range2.To || From >= range2.From && To <= range2.To)
+            if ((From <= range2.From && To >= range2.To) || (From >= range2.From && To <= range2.To))
             {
                 return new Range(Math.Max(From, range2.From), Math.Min(To, range2.To));
             }
@@ -44,9 +44,9 @@ namespace RangeTask
             return new Range[] { new Range(Math.Min(From, range2.From), Math.Max(To, range2.To)) };
         }
 
-        public Range[] GetAsymmetricalDifference(Range range2)
+        public Range[] GetDifference(Range range2)
         {
-            if (From >= range2.From && To <= range2.To || From < range2.From && To < range2.To || From > range2.From && To > range2.To)
+            if ((From >= range2.From && To <= range2.To) || (From < range2.From && To < range2.To) || (From > range2.From && To > range2.To))
             {
                 return new Range[0];
             }
@@ -64,33 +64,24 @@ namespace RangeTask
             return new Range[] { new Range(From, range2.From) };
         }
 
-        public string ToString()
+        public override string ToString()
         {
-            return $"Интервал-пересечение выполнено: [({From};{To})]";
+            return $"Получение нового диапазона выполнено: ({From}; {To})";
         }
 
-        public static void ToString(string operationType, Range[] ranges)
+        public static string ToString(string operationType, Range[] ranges)
         {
             if (ranges.Length == 2)
             {
-                Console.WriteLine(operationType + "интервалов имеет два куска: [({0};{1}),({2};{3})]", ranges[0].From, ranges[0].To, ranges[1].From, ranges[1].To);
-
-                return;
+                return operationType + $"интервалов имеет два куска: [({ranges[0].From}; {ranges[0].To}), ({ranges[1].From}; {ranges[1].To})]";
             }
 
             if (ranges.Length == 1)
             {
-                Console.WriteLine(operationType + "интервалов выполнено: [({0};{1})]", ranges[0].From, ranges[0].To);
-
-                return;
+                return operationType + $"интервалов выполнено: [({ranges[0].From}; {ranges[0].To})]";
             }
 
-            if (ranges.Length == 0)
-            {
-                Console.WriteLine(operationType + "интервалов выполнено: []");
-
-                return;
-            }
+            return operationType + "интервалов выполнено: []";
         }
     }
 }
